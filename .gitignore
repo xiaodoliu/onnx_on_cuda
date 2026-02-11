@@ -1,0 +1,16 @@
+# python
+.venv/
+__pycache__/
+*.pyc
+
+# profiling outputs
+*.qdstrm
+*.nsys-rep
+*.qdrep
+*.sqlite
+
+# build artifacts
+bench/bench_libdevice
+
+# models (keep out of git; use LFS or external storage)
+/models/

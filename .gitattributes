@@ -1,0 +1,2 @@
+bench/models/*.onnx filter=lfs diff=lfs merge=lfs -text
+bench/models/*.onnx.data filter=lfs diff=lfs merge=lfs -text
