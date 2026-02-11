@@ -64,6 +64,44 @@ nsys profile --trace=cuda,osrt --force-overwrite=true -o fp16_exp_ort \
   python3 bench/run_fp16_mathbench_ort.py --model bench/models/fp16_exp.onnx --count_ops 1 --warmup 2 --iters 3
 ```
 
+### Sample results
+
+These are example outputs on **NVIDIA GeForce RTX 4090 Laptop GPU** using ORT CUDA EP.
+
+Softmax (large):
+
+```bash
+python bench/run_fp16_mathbench_ort.py --model bench/models/fp16_softmax.onnx --warmup 5 --iters 20
+```
+
+```text
+Providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+model=bench/models/fp16_softmax.onnx
+input=X shape=[1, 4096, 4096] dtype=fp16 elems=16777216
+output=Y_softmax dtype=tensor(float16)
+warmup=5 iters=20 disable_optimizations=False
+depth=64 count_ops(per_element_per_layer)=1.0
+best_s=0.069219 avg_s=0.071167
+effective_throughput(best)=15.512 GOP/s  effective_throughput(avg)=15.088 GOP/s
+```
+
+Softmax (small sanity check):
+
+```bash
+python bench/run_fp16_mathbench_ort.py --model bench/models/fp16_softmax_small.onnx --warmup 3 --iters 10
+```
+
+```text
+Providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']
+model=bench/models/fp16_softmax_small.onnx
+input=X shape=[1, 256, 512] dtype=fp16 elems=131072
+output=Y_softmax dtype=tensor(float16)
+warmup=3 iters=10 disable_optimizations=False
+depth=2 count_ops(per_element_per_layer)=1.0
+best_s=0.000153 avg_s=0.000162
+effective_throughput(best)=1.714 GOP/s  effective_throughput(avg)=1.617 GOP/s
+```
+
 ### Run the binary directly
 
 ```bash
